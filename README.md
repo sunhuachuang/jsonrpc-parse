@@ -88,7 +88,7 @@ parse JSON-RPC (2.0) from TCP Bytes or deparse JSON-RPC to Bytes
 <-- [
         {"jsonrpc": "2.0", "result": 7, "id": "1"},
         {"jsonrpc": "2.0", "result": 19, "id": "2"},
-        {"jsonrpc": "2.0", "error": {"code": -32600, "message": "Invalid Request"}, "id": null},
+            {"jsonrpc": "2.0", "error": {"code": -32600, "message": "Invalid Request"}, "id": null},
         {"jsonrpc": "2.0", "error": {"code": -32601, "message": "Method not found"}, "id": "5"},
         {"jsonrpc": "2.0", "result": ["hello", 5], "id": "9"}
     ]
