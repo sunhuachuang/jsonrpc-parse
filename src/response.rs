@@ -8,10 +8,10 @@ use crate::types::Params;
 
 #[derive(Default, Debug, Clone, Serialize, Deserialize)]
 pub struct Response {
-    pub jsonrpc: String,
-    pub method: String,
-    pub id: String,
-    pub result: Params,
+    jsonrpc: String,
+    method: String,
+    id: String,
+    result: Params,
 }
 
 impl Response {
@@ -83,6 +83,18 @@ impl Response {
         let mut headers = generate_response_headers(body_bytes.len());
         headers.put(body_bytes);
         headers.freeze()
+    }
+
+    pub fn result(&self) -> &Params {
+        &self.result
+    }
+
+    pub fn method(&self) -> &String {
+        &self.method
+    }
+
+    pub fn id(&self) -> &String {
+        &self.id
     }
 }
 
