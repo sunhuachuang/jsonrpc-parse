@@ -1,6 +1,5 @@
 use bytes::Bytes;
 use serde_json::Value;
-use std::collections::HashMap;
 
 use crate::parse::split_bytes;
 use crate::response::Error;
@@ -32,6 +31,11 @@ impl Request {
         } else {
             " ".into()
         };
+
+        // check if json is response
+        if value.get("result").is_some() || value.get("error").is_some() {
+            return Err(Error::InvalidRequest("".into(), id));
+        }
 
         if value.get("method").is_none() {
             return Err(Error::MethodNotFound("".into(), id));

@@ -23,8 +23,16 @@ pub fn split_bytes(bytes: Bytes) -> Result<Value, Error> {
     return Err(Error::ParseError(None));
 }
 
-pub fn generate_request_headers(length: usize) -> BytesMut {
-    let mut headers = BytesMut::new();
+pub fn generate_request_headers(host: String, length: usize) -> BytesMut {
+    let mut headers = BytesMut::with_capacity(length + 200);
+    headers.put("POST / HTTP/1.1\r\n");
+    headers.put("Host: ");
+    headers.put(host);
+    headers.put("\r\n");
+    headers.put("Content-Type: application/json\r\n");
+    headers.put("Content-Length: ");
+    headers.put(length.to_string());
+    headers.put("\r\n\r\n");
     headers
 }
 
@@ -32,10 +40,10 @@ pub fn generate_response_headers(length: usize) -> BytesMut {
     let mut headers = BytesMut::with_capacity(length + 200);
     headers.put("HTTP/1.1 200 OK\r\n");
     headers.put("Server: Tachion JSON-RPC\r\n");
+    headers.put("Content-Type: application/json\r\n");
+    headers.put("Connection: Closed\r\n");
     headers.put("Content-Length: ");
     headers.put(length.to_string());
-    headers.put("\r\n");
-    headers.put("Content-Type: application/json\r\n");
-    headers.put("Connection: Closed\r\n\r\n");
+    headers.put("\r\n\r\n");
     headers
 }
