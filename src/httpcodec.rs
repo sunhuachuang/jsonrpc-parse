@@ -1,5 +1,5 @@
 use bytes::{BufMut, Bytes, BytesMut};
-use tokio::codec::{Decoder, Encoder};
+use tokio_codec::{Decoder, Encoder};
 
 use super::request::Request;
 use super::response::{Error, Response};
