@@ -1,11 +1,12 @@
-use bytes::Bytes;
+use bytes::{BufMut, Bytes};
+use serde_derive::{Deserialize, Serialize};
 use serde_json::Value;
 
-use crate::parse::split_bytes;
+use crate::parse::{generate_request_headers, split_bytes};
 use crate::response::Error;
 use crate::types::Params;
 
-#[derive(Default, Debug, Clone)]
+#[derive(Default, Debug, Clone, Serialize, Deserialize)]
 pub struct Request {
     jsonrpc: String,
     method: String,
@@ -27,7 +28,13 @@ impl Request {
 
     pub fn parse_from_json(value: Value) -> Result<Self, Error> {
         let id = if let Some(id) = value.get("id") {
-            id.as_str().unwrap().into()
+            if id.is_number() {
+                id.as_u64().unwrap_or(0).to_string()
+            } else if id.is_string() {
+                id.as_str().unwrap().into()
+            } else {
+                " ".into()
+            }
         } else {
             " ".into()
         };
@@ -63,8 +70,21 @@ impl Request {
         split_bytes(bytes).and_then(|value| Request::parse_from_json(value))
     }
 
+    pub fn parse_from_json_bytes(bytes: Bytes) -> Result<Self, Error> {
+        serde_json::from_slice(&bytes[..])
+            .or(Err(Error::ParseError(None)))
+            .and_then(|value| Request::parse_from_json(value))
+    }
+
     pub fn deparse(&self) -> Bytes {
-        Default::default()
+        let body = serde_json::to_string(&self).unwrap();
+
+        let body_bytes = body.as_bytes();
+
+        let mut headers =
+            generate_request_headers("Hyperdrive_RPC_Request".into(), body_bytes.len());
+        headers.put(body_bytes);
+        headers.freeze()
     }
 
     pub fn method(&self) -> &String {

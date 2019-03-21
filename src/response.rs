@@ -30,6 +30,12 @@ impl Response {
         split_bytes(bytes).and_then(|value| Response::parse_from_json(value))
     }
 
+    pub fn parse_from_json_bytes(bytes: Bytes) -> Result<Self, Error> {
+        serde_json::from_slice(&bytes[..])
+            .or(Err(Error::ParseError(None)))
+            .and_then(|value| Response::parse_from_json(value))
+    }
+
     pub fn parse_from_json(value: Value) -> Result<Self, Error> {
         let id = if let Some(id) = value.get("id") {
             id.as_str().unwrap().into()
@@ -172,7 +178,11 @@ impl Error {
                 )
                 .unwrap(),
                 Error::ParseError(None) => {
-                    serde_json::to_string(&ErrorOnlyResponse::new(self.error_value())).unwrap()
+                    serde_json::to_string(&ErrorOnlyResponse::new(self.error_value()))
+                        .map_err(|e| {
+                            println!("{:?}", e);
+                        })
+                        .unwrap()
                 }
                 Error::MethodNotFound(method, id)
                 | Error::InvalidRequest(method, id)

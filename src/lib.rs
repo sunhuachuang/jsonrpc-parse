@@ -1,3 +1,4 @@
+pub mod httpcodec;
 pub mod parse;
 mod request;
 mod response;
