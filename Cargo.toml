@@ -1,5 +1,5 @@
 [package]
-name = "jsonrpc"
+name = "jsonrpc-codec"
 version = "0.1.0"
 authors = ["Sun <huachuang20@gmail.com>"]
 edition = "2018"
