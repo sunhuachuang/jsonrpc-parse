@@ -3,6 +3,7 @@ name = "jsonrpc"
 version = "0.1.0"
 authors = ["Sun <huachuang20@gmail.com>"]
 edition = "2018"
+description = "parse JSON-RPC (2.0) from TCP Bytes or deparse JSON-RPC to Bytes"
 repository = "https://github.com/sunhuachuang/jsonrpc-codec"
 keywords = ["http-codec", "tokio-codec", "request-codec", "response-codec"]
 license = "MIT"
