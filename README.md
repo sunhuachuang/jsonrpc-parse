@@ -1,9 +1,14 @@
 # jsonrpc-parse
 
-parse JSON-RPC (2.0) from TCP Bytes or deparse JSON-RPC to Bytes
+parse JSON-RPC (2.0) from TCP Bytes or deparse JSON-RPC to Codec and Bytes
+
+```
+[dependencies]
+jsonrpc_parse = "1.0"
+```
 
 ```Rust
-use jsonrpc::httpcodec::{HTTPCodec, HTTP};
+use jsonrpc_parse::httpcodec::{HTTPCodec, HTTP};
 
 // if msg is HTTPCodec's HTTP
 

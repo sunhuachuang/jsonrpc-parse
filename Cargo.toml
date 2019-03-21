@@ -1,11 +1,11 @@
 [package]
-name = "jsonrpc-codec"
+name = "jsonrpc-parse"
 version = "0.1.0"
 authors = ["Sun <huachuang20@gmail.com>"]
 edition = "2018"
-description = "parse JSON-RPC (2.0) from TCP Bytes or deparse JSON-RPC to Bytes"
-repository = "https://github.com/sunhuachuang/jsonrpc-codec"
-keywords = ["http-codec", "tokio-codec", "request-codec", "response-codec"]
+description = "parse JSON-RPC (2.0) from TCP Bytes or deparse JSON-RPC to Codec and Bytes"
+repository = "https://github.com/sunhuachuang/jsonrpc-parse"
+keywords = ["jsonrpc", "codec", "jsonrpc-parse", "jsonrpc-codec"]
 license = "MIT"
 
 [dependencies]
