@@ -3,6 +3,9 @@ name = "jsonrpc"
 version = "0.1.0"
 authors = ["Sun <huachuang20@gmail.com>"]
 edition = "2018"
+repository = "https://github.com/sunhuachuang/jsonrpc-codec"
+keywords = ["http-codec", "tokio-codec", "request-codec", "response-codec"]
+license = "MIT"
 
 [dependencies]
 http = "0.1"
