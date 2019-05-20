@@ -24,9 +24,11 @@ pub fn split_bytes(bytes: Bytes) -> Result<Value, Error> {
     return Err(Error::ParseError(None));
 }
 
-pub fn generate_request_headers(host: String, length: usize) -> BytesMut {
+pub fn generate_request_headers(path: String, host: String, length: usize) -> BytesMut {
     let mut headers = BytesMut::with_capacity(length + 200);
-    headers.put("POST / HTTP/1.1\r\n");
+    headers.put("POST ");
+    headers.put(path);
+    headers.put(" HTTP/1.1\r\n");
     headers.put("Host: ");
     headers.put(host);
     headers.put("\r\n");

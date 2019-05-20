@@ -12,10 +12,12 @@ pub struct Request {
     method: String,
     id: String,
     params: Params,
+    path: String,
+    host: String,
 }
 
 impl Request {
-    pub fn new(method: String, id: String, params: Params) -> Self {
+    pub fn new(method: String, id: String, params: Params, path: String, host: String) -> Self {
         let jsonrpc = "2.0".into();
 
         Request {
@@ -23,6 +25,8 @@ impl Request {
             method,
             id,
             params,
+            path,
+            host,
         }
     }
 
@@ -57,12 +61,16 @@ impl Request {
         };
 
         let jsonrpc = "2.0".into();
+        let path = "/".into();
+        let host = "DEFAULT".into();
 
         Ok(Request {
             jsonrpc,
             method,
             id,
             params,
+            path,
+            host,
         })
     }
 
@@ -82,7 +90,7 @@ impl Request {
         let body_bytes = body.as_bytes();
 
         let mut headers =
-            generate_request_headers("Hyperdrive_RPC_Request".into(), body_bytes.len());
+            generate_request_headers(self.path.clone(), self.host.clone(), body_bytes.len());
         headers.put(body_bytes);
         headers.freeze()
     }
