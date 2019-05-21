@@ -42,7 +42,7 @@ pub fn generate_request_headers(path: String, host: String, length: usize) -> By
 pub fn generate_response_headers(length: usize) -> BytesMut {
     let mut headers = BytesMut::with_capacity(length + 200);
     headers.put("HTTP/1.1 200 OK\r\n");
-    headers.put("Server: Tachion JSON-RPC\r\n");
+    headers.put("Server: JSON-RPC\r\n");
     headers.put("Content-Type: application/json\r\n");
     headers.put("Connection: Closed\r\n");
     headers.put("Content-Length: ");
