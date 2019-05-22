@@ -15,7 +15,7 @@ pub enum HTTP {
 impl HTTP {
     fn parse(src: &mut BytesMut, mut had_body: BytesMut) -> Option<HTTP> {
         if had_body.len() == 0 {
-            let (version, amt, length) = {
+            let (_version, amt, length) = {
                 let mut req_parsed_headers = [httparse::EMPTY_HEADER; 16];
                 let mut res_parsed_headers = [httparse::EMPTY_HEADER; 16];
                 let mut req = httparse::Request::new(&mut req_parsed_headers);
@@ -87,10 +87,10 @@ impl HTTP {
 
                 (version, amt, length)
             };
-            if version != 1 {
-                println!("only HTTP/1.1 accepted");
-                return Some(HTTP::Error(Error::ParseError(None)));
-            }
+            //if version != 1 {
+            //   println!("only HTTP/1.1 accepted, now: {}", version);
+            //   return Some(HTTP::Error(Error::ParseError(None)));
+            //}
 
             had_body = src.split_off(amt);
 
